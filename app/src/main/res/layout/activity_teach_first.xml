@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+
+    android:background="@drawable/gradient_blue">
+
+    <!-- Teacher Info Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="?android:colorBackgroundFloating">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/teacher_profile_image"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/googleg_standard_color_18"
+                android:scaleType="centerCrop"
+                android:contentDescription="Teacher Profile"
+                android:background="@drawable/circle_background"
+                android:padding="4dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:id="@+id/teacher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mr. Professor X"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?android:textColorPrimary" />
+
+                <TextView
+                    android:id="@+id/teacher_department"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Computer Department"
+                    android:textSize="14sp"
+                    android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subjectRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        android:scrollbars="vertical" />
+
+    <!-- Add Subject Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addSubjectBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Subject"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:layout_marginTop="8dp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/add_icon"
+        app:iconPadding="8dp"
+        style="@style/Widget.Material3.Button"
+        android:backgroundTint="@color/md_theme_light_onBackground" />
+
+    <!-- View Attendance Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewExcel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="View Attendance"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        style="@style/Widget.Material3.Button"
+        android:backgroundTint="@color/md_theme_light_onSecondary" />
+
+
+</LinearLayout>
