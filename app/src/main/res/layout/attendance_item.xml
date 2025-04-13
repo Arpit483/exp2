@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/subjectTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subject: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/presentDaysTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Present Days: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/totalClassesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Classes: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/attendancePercentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attendance: "
+        android:textSize="16sp" />
+
+</LinearLayout>

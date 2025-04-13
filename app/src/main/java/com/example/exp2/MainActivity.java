@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button studentButton, teacherButton, clubButton;
     private EditText emailEditText, passwordEditText;
     private FirebaseAuth mAuth;
+    private DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         clubButton = findViewById(R.id.button3);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        TextView signUpTextView = findViewById(R.id.signUpTextView);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference();
 
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,23 +89,48 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     if (user != null) {
-                                        if (selectedRole.equals("Student")) {
-                                            Intent intent = new Intent(MainActivity.this, StudentActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else if (selectedRole.equals("Teacher")) {
-                                            Intent intent = new Intent(MainActivity.this, Teach_First.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else if (selectedRole.equals("Club")) {
-                                            Toast.makeText(MainActivity.this, "Club Activity not implemented", Toast.LENGTH_SHORT).show();
-                                        }
+                                        database.child("users").child(user.getUid()).child("role")
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        String userRole = snapshot.getValue(String.class);
+
+                                                        if (userRole != null && userRole.equals(selectedRole)) {
+                                                            if (selectedRole.equals("Student")) {
+                                                                Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            } else if (selectedRole.equals("Teacher")) {
+                                                                Intent intent = new Intent(MainActivity.this, Teach_First.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            } else if (selectedRole.equals("Club")) {
+                                                                Toast.makeText(MainActivity.this, "Club Activity not implemented", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(MainActivity.this, "Invalid role selection", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+                                                        Toast.makeText(MainActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
                                     }
                                 } else {
                                     Toast.makeText(MainActivity.this, "Authentication failed. " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+            }
+        });
+
+        signUpTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

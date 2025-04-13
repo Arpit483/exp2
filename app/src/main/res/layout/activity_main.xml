@@ -72,7 +72,6 @@
                 android:layout_marginEnd="5dp"
                 android:backgroundTint="#F9F9F9"
                 android:textColor="@android:color/black"
-
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
 
@@ -85,7 +84,6 @@
                 android:layout_marginEnd="5dp"
                 android:backgroundTint="#F9F9F9"
                 android:textColor="@android:color/black"
-
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
 
@@ -97,7 +95,6 @@
                 android:text="Club"
                 android:backgroundTint="#F9F9F9"
                 android:textColor="@android:color/black"
-
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
         </LinearLayout>
@@ -113,7 +110,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-
                 android:drawablePadding="8dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +125,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-
                 android:drawablePadding="8dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
