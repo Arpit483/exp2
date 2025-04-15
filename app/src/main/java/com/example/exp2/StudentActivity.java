@@ -1,7 +1,6 @@
 package com.example.exp2;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +13,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +34,9 @@ import org.json.JSONObject;
 public class StudentActivity extends AppCompatActivity {
 
     TextView studentNameTextView, studentRollNoTextView;
-    Button markAttendanceButton;
     String studentUserId;
     RecyclerView attendanceRecyclerView;
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,17 +78,8 @@ public class StudentActivity extends AppCompatActivity {
                     studentNameTextView.setText(studentName);
                     studentRollNoTextView.setText("Roll No: " + rollNo);
 
-                    // Replace with your actual response retrieval logic (e.g., from server or Firebase)
-                    String jsonResponse = "{\"attendance_summary\": [{\"attendance_percent\": 0.0, \"present_days\": 0, \"subject\": \"attendance_requests\", \"total_classes\": 4}, {\"attendance_percent\": 0.0, \"present_days\": 0, \"subject\": \"DSA_attendance\", \"total_classes\": 1}, {\"attendance_percent\": 28.57, \"present_days\": 2, \"subject\": \"OOP_attendance\", \"total_classes\": 7}, {\"attendance_percent\": 0.0, \"present_days\": 0, \"subject\": \"PPL_attendance\", \"total_classes\": 1}, {\"attendance_percent\": 0, \"present_days\": 0, \"subject\": \"students\", \"total_classes\": 0}, {\"attendance_percent\": 0.0, \"present_days\": 0, \"subject\": \"XYZ_attendance\", \"total_classes\": 2}], \"roll_no\": \"SCOB24\"}";
-
-                    try {
-                        JSONObject response = new JSONObject(jsonResponse);
-                        JSONArray attendanceSummary = response.getJSONArray("attendance_summary");
-                        AttendanceAdapter adapter = new AttendanceAdapter(attendanceSummary);
-                        attendanceRecyclerView.setAdapter(adapter);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    // Fetch attendance data from the URL using the rollNo from Firebase
+                    fetchAttendanceData(rollNo);
                 } else {
                     studentNameTextView.setText("Student");
                     studentRollNoTextView.setText("Roll No: Unknown");
@@ -97,12 +93,31 @@ public class StudentActivity extends AppCompatActivity {
                 Toast.makeText(StudentActivity.this, "Failed to load student data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        markAttendanceButton.setOnClickListener(v -> markAttendance());
     }
 
-    private void markAttendance() {
-        // Implement your attendance marking logic here (e.g., send data to Firebase)
-        Toast.makeText(this, "Attendance Marked", Toast.LENGTH_SHORT).show();
+    private void fetchAttendanceData(String rollNo) {
+        String url = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/student-attendance/" + rollNo; // Append rollNo to URL
+        requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray attendanceSummary = response.getJSONArray("attendance_summary");
+                    AttendanceAdapter adapter = new AttendanceAdapter(attendanceSummary);
+                    attendanceRecyclerView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(StudentActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(StudentActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
     }
 }
