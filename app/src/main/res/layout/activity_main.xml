@@ -165,7 +165,8 @@
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:textColor="#007BFF"
-            android:id="@+id/signUpTextView"/>
+            android:id="@+id/signUpTextView"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <TextView

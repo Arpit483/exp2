@@ -1,10 +1,13 @@
 package com.example.exp2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private String selectedRole = "";
     private Button studentButton, teacherButton, clubButton;
     private EditText emailEditText, passwordEditText;
+    private CheckBox rememberMeCheckBox; // Added CheckBox
     private FirebaseAuth mAuth;
     private DatabaseReference database;
 
@@ -43,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         TextView signUpTextView = findViewById(R.id.signUpTextView);
+        rememberMeCheckBox = findViewById(R.id.rememberMeCheckBox); // Initialize CheckBox
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
+
+        loadSavedCredentials(); // Load saved credentials if any
 
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                boolean rememberMe = rememberMeCheckBox.isChecked();
 
                 if (email.isEmpty() || password.isEmpty() || selectedRole.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please fill all fields and select a role", Toast.LENGTH_SHORT).show();
@@ -123,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         });
+                if (rememberMe) {
+                    saveCredentials(email, password);
+                } else {
+                    clearCredentials();
+                }
             }
         });
 
@@ -140,5 +153,34 @@ public class MainActivity extends AppCompatActivity {
         teacherButton.setBackgroundColor(Color.parseColor("#F9F9F9"));
         clubButton.setBackgroundColor(Color.parseColor("#F9F9F9"));
         selectedButton.setBackgroundColor(Color.parseColor("#E0E0E0"));
+    }
+
+    private void loadSavedCredentials() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String savedEmail = preferences.getString("email", "");
+        String savedPassword = preferences.getString("password", "");
+        boolean rememberMe = preferences.getBoolean("rememberMe", false);
+
+        emailEditText.setText(savedEmail);
+        passwordEditText.setText(savedPassword);
+        rememberMeCheckBox.setChecked(rememberMe);
+    }
+
+    private void saveCredentials(String email, String password) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.putBoolean("rememberMe", true);
+        editor.apply();
+    }
+
+    private void clearCredentials() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("email");
+        editor.remove("password");
+        editor.remove("rememberMe");
+        editor.apply();
     }
 }

@@ -58,4 +58,5 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("androidx.preference:preference-ktx:1.2.0")
 }
