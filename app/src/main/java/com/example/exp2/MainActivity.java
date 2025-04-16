@@ -113,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else if (selectedRole.equals("Club")) {
-                                                                Toast.makeText(MainActivity.this, "Club Activity not implemented", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(MainActivity.this, ClubHomeActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
                                                             }
                                                         } else {
                                                             Toast.makeText(MainActivity.this, "Invalid role selection", Toast.LENGTH_SHORT).show();

@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:backgroundTint="@color/material_dynamic_neutral20"
+        android:backgroundTint="#FFFFFF"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
@@ -29,12 +29,13 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/attend_logo"  android:contentDescription="Calendar Icon" />
+                android:src="@drawable/attend_logo"
+                android:contentDescription="Calendar Icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AttendanceApp"
+                android:text="AutoAttend"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginStart="8dp"
@@ -70,10 +71,15 @@
                 android:layout_weight="1"
                 android:text="Student"
                 android:layout_marginEnd="5dp"
-                android:backgroundTint="#F9F9F9"
+                android:backgroundTint="#E0E0E0"
                 android:textColor="@android:color/black"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/button2"
@@ -82,10 +88,15 @@
                 android:layout_weight="1"
                 android:text="Teacher"
                 android:layout_marginEnd="5dp"
-                android:backgroundTint="#F9F9F9"
+                android:backgroundTint="#E0E0E0"
                 android:textColor="@android:color/black"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/button3"
@@ -93,12 +104,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Club"
-                android:backgroundTint="#F9F9F9"
+                android:backgroundTint="#E0E0E0"
                 android:textColor="@android:color/black"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAllCaps="false"/>
         </LinearLayout>
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,7 +181,7 @@
             android:layout_marginTop="20dp"
             android:textColor="#007BFF"
             android:id="@+id/signUpTextView"
-            android:visibility="gone"/>
+            android:clickable="true"/>
     </LinearLayout>
 
     <TextView
