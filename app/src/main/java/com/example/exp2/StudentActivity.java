@@ -1,6 +1,9 @@
 package com.example.exp2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ public class StudentActivity extends AppCompatActivity {
     String studentUserId;
     RecyclerView attendanceRecyclerView;
     RequestQueue requestQueue;
+    Button requestAttendanceButton; // Added button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class StudentActivity extends AppCompatActivity {
         studentNameTextView = findViewById(R.id.studentName);
         studentRollNoTextView = findViewById(R.id.studentRollNo);
         attendanceRecyclerView = findViewById(R.id.attendanceRecyclerView);
+        requestAttendanceButton = findViewById(R.id.bottomButton); // Initialize the button
 
         attendanceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -80,6 +85,16 @@ public class StudentActivity extends AppCompatActivity {
 
                     // Fetch attendance data from the URL using the rollNo from Firebase
                     fetchAttendanceData(rollNo);
+
+                    // Set onClick listener for the request attendance button
+                    requestAttendanceButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(StudentActivity.this, Request_Attendance_Form.class);
+                            startActivity(intent);
+                        }
+                    });
+
                 } else {
                     studentNameTextView.setText("Student");
                     studentRollNoTextView.setText("Roll No: Unknown");

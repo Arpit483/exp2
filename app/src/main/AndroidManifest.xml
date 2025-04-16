@@ -24,6 +24,15 @@
         android:theme="@style/Theme.Exp2"
         tools:targetApi="31">
         <activity
+            android:name=".ClubHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClubActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Request_Attendance_Form"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
