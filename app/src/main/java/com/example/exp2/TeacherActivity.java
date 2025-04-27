@@ -142,16 +142,16 @@ public class TeacherActivity extends AppCompatActivity {
     }
 
     private void sendCameraOnRequest() {
-        sendPostRequest("https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/camera-on", "Camera On", "{\"subject\": \"" + subjectName + "\"}");
+        sendPostRequest("https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/camera-on", "Camera On", "{\"subject\": \"" + subjectName + "\"}");
     }
 
     private void sendCameraOffRequest() {
-        sendPostRequest("https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/camera-off", "Camera Off", "{\"subject\": \"" + subjectName + "\"}");
+        sendPostRequest("https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/camera-off", "Camera Off", "{\"subject\": \"" + subjectName + "\"}");
     }
 
     private void sendAddFaceRequest(String rollNo, String name) {
         String json = "{\"roll_no\": \"" + rollNo + "\", \"name\": \"" + name + "\"}";
-        sendPostRequest("https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/add-face", "Add Face", json);
+        sendPostRequest("https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/add-face", "Add Face", json);
     }
 
     private void sendPostRequest(String urlString, String actionName, String jsonInputString) {

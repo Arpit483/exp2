@@ -181,7 +181,9 @@
             android:layout_marginTop="20dp"
             android:textColor="#007BFF"
             android:id="@+id/signUpTextView"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:visibility="invisible"
+            />
     </LinearLayout>
 
     <TextView
