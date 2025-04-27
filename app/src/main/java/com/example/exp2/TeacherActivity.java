@@ -71,7 +71,7 @@ public class TeacherActivity extends AppCompatActivity {
         if (currentUser != null) {
             teacherUserId = currentUser.getUid();
         } else {
-            Toast.makeText(this, "Teacher not authenticated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Teacher is not authenticated", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
