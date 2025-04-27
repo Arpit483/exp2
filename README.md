@@ -7,7 +7,7 @@
 AutoAttend is an AI-powered attendance management system that uses facial recognition to automate and streamline the process of tracking student attendance. Traditional methods are time-consuming and error-prone, often allowing proxy entries and inaccurate records. AutoAttend ensures real-time detection, high accuracy, and secure data logging.
 
 Developed by:
-- Pratik Shinde ([@pratikshinde](https://github.com/pratikshinde))
+- Pratik Shinde ([@pratikshinde](https://github.com/PratikShinde117))
 - Arpit Deosthale ([@Arpit483](https://github.com/Arpit483))
 - Aditya Kotewar
 - Ajit Chavan
@@ -59,17 +59,9 @@ git clone https://github.com/Arpit483/exp2.git
 ```bash
 cd backend
 ```
-
-2. Install dependencies:
+2. Run the Flask server:
 ```bash
-pip install -r requirements.txt
-```
-
-3. Configure database connection in `config.py`
-
-4. Run the Flask server:
-```bash
-python app.py
+python face_recognition_api.py
 ```
 
 ## Usage Guide
@@ -110,7 +102,6 @@ The system provides the following API endpoints:
 
 ![Login Screen](screenshots/login.png.jpg)
 ![Teacher Dashboard](screenshots/teacher_dashboard.png.jpg)
-![Face Recognition](screenshots/recognition.png.jpg)
 ![Student Dashboard](screenshots/student_view.png.jpg)
 
 ## Contributions
