@@ -7,7 +7,7 @@
 AutoAttend is an AI-powered attendance management system that uses facial recognition to automate and streamline the process of tracking student attendance. Traditional methods are time-consuming and error-prone, often allowing proxy entries and inaccurate records. AutoAttend ensures real-time detection, high accuracy, and secure data logging.
 
 Developed by:
-- Pratik Shinde ([@pratikshinde](https://github.com/pratikshinde))
+- Pratik Shinde ([@pratikshinde](https://github.com/PratikShinde117))
 - Arpit Deosthale ([@Arpit483](https://github.com/Arpit483))
 - Aditya Kotewar
 - Ajit Chavan
