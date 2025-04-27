@@ -59,17 +59,9 @@ git clone https://github.com/Arpit483/exp2.git
 ```bash
 cd backend
 ```
-
-2. Install dependencies:
+2. Run the Flask server:
 ```bash
-pip install -r requirements.txt
-```
-
-3. Configure database connection in `config.py`
-
-4. Run the Flask server:
-```bash
-python app.py
+python face_recognition_api.py
 ```
 
 ## Usage Guide
