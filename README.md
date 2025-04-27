@@ -108,8 +108,8 @@ The system provides the following API endpoints:
 
 ## Screenshots
 
-![Login Screen](screenshots/login.png)
-![Teacher Dashboard](screenshots/teacher_dashboard.png)
+![Login Screen](screenshots/login.png.jpg)
+![Teacher Dashboard](screenshots/teacher_dashboard.png.jpg)
 ![Face Recognition](screenshots/recognition.png)
 ![Student Dashboard](screenshots/student_view.png)
 
