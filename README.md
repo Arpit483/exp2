@@ -129,7 +129,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Future Scope
 
-- Mobile application for iOS
+- Mobile application for Android
 - Integration with institutional management systems
 - Cloud-based storage for improved accessibility
 - Advanced analytics and reporting features
