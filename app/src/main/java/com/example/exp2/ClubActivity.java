@@ -35,8 +35,8 @@ public class ClubActivity extends AppCompatActivity {
     private ClubAdapter clubAdapter;
     private List<Club> clubList;
     private RequestQueue requestQueue;
-    private String attendanceRequestsUrl = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/attendance-requests";
-    private String updateApiEndpoint = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/attendance-requests"; // Use the full URL for update
+    private String attendanceRequestsUrl = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/attendance-requests";
+    private String updateApiEndpoint = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/attendance-requests"; // Use the full URL for update
     private TextView facultyNameTextView;
     private ImageView profileImageView;
     private FirebaseAuth mAuth;

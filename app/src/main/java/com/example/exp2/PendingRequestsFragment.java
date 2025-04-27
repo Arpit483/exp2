@@ -31,7 +31,7 @@ public class PendingRequestsFragment extends Fragment {
     private ClubAdapter clubAdapter;
     private List<Club> clubList;
     private RequestQueue requestQueue;
-    private String attendanceRequestsUrl = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/attendance-requests";
+    private String attendanceRequestsUrl = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/attendance-requests";
 
     public PendingRequestsFragment() {
         // Required empty public constructor
@@ -96,7 +96,7 @@ public class PendingRequestsFragment extends Fragment {
     }
 
     private void updateAttendanceStatus(String rollNo, String date, String newStatus) {
-        String updateUrl = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/attendance-requests/" + rollNo + "/" + date;
+        String updateUrl = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/attendance-requests/" + rollNo + "/" + date;
 
         JSONObject jsonParams = new JSONObject();
         try {

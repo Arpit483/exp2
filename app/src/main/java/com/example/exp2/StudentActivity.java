@@ -111,7 +111,7 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     private void fetchAttendanceData(String rollNo) {
-        String url = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app/student-attendance/" + rollNo; // Append rollNo to URL
+        String url = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/student-attendance/" + rollNo; // Append rollNo to URL
         requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

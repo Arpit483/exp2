@@ -60,7 +60,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
     }
 
     private void downloadFile(String fileName) {
-        String baseUrl = "https://9ed6-2409-40c2-104c-bae3-19d2-b49f-ec06-317a.ngrok-free.app /download/";
+        String baseUrl = "https://4290-2409-40c2-1033-4171-6506-37e3-1918-77ce.ngrok-free.app/download/";
         String url = baseUrl + fileName;
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
