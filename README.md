@@ -110,7 +110,6 @@ The system provides the following API endpoints:
 
 ![Login Screen](screenshots/login.png.jpg)
 ![Teacher Dashboard](screenshots/teacher_dashboard.png.jpg)
-![Face Recognition](screenshots/recognition.png.jpg)
 ![Student Dashboard](screenshots/student_view.png.jpg)
 
 ## Contributions
