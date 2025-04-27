@@ -1,0 +1,213 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { jsPDF } from 'jspdf';
+import "jspdf-autotable";
+import '../index.css';
+
+
+
+export const TimetableDisplay = () => {
+  const [timetable, setTimetable] = useState([]);
+  const [editingTimetable, setEditingTimetable] = useState(null);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+      fetchTimetable();
+  }, []);
+
+  const fetchTimetable = async () => {
+      try {
+          const response = await axios.get("http://localhost:5000/timetable");
+          console.log(response.data.data);
+          setTimetable(response.data.data);
+      } catch (error) {
+          setMessage("Error fetching timetable data.");
+      }
+  };
+
+  const handleEdit = (index) => {
+      setEditingTimetable({ ...timetable[index], index });
+  };
+
+  const handleDelete = async (index, id) => {
+      try {
+          const response = await axios.delete(`http://localhost:5000/timetable/${id}`);
+          if (response.status === 200) {
+              const updated = timetable.filter((item, i) => i !== index);
+              setTimetable(updated);
+          }
+      } catch (error) {
+          console.error("Error deleting item:", error);
+      }
+  };
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setEditingTimetable((prevState) => ({
+          ...prevState,
+          [name]: value,
+      }));
+  };
+
+  const handleSave = async () => {
+      try {
+          await axios.put(`http://localhost:5000/timetable/${editingTimetable.id}`, editingTimetable);
+          const updatedTimetable = [...timetable];
+          updatedTimetable[editingTimetable.index] = editingTimetable;
+          setTimetable(updatedTimetable);
+          setMessage("Timetable updated successfully!");
+          setEditingTimetable(null);
+      } catch (error) {
+          setMessage("Error saving timetable.");
+      }
+  };
+
+  const handlePreviewPDF = () => {
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+  
+    const firstStart = timetable[0]?.start ? new Date(timetable[0].start).toLocaleDateString() : "N/A";
+    const lastTill = timetable[0]?.till ? new Date(timetable[0].till).toLocaleDateString() : "N/A"; 
+  
+    doc.text("Dr.D.Y.Patil Institute of Technology, Pimpri, Pune", 40, 7);
+    doc.text(`Master Time Table from ${firstStart} to ${lastTill}`, 50, 17);
+  
+    const columns = ["Day", "Division", "Subject", "Professor", "Classroom", "Start Time", "End Time"];
+  
+    let lastPrintedDay = "";
+    let lastPrintedDivision = "";
+  
+    const rows = timetable.reduce((acc, entry) => {
+      let subjectName = entry.subject_name;
+      let professorName = entry.professor_name;
+      let classroomNumber = entry.classroom_number;
+  
+      // If it's a practical subject, concatenate the batch info
+      if (entry.subject_name == ("practical")) {
+        subjectName = `Batch 1: ${entry.batch1_name || "N/A"}\nBatch 2: ${entry.batch2_name || "N/A"}\nBatch 3: ${entry.batch3_name || "N/A"}`;
+        professorName = `${entry.batch1_professor || "N/A"}\n${entry.batch2_professor || "N/A"}\n${entry.batch3_professor || "N/A"}`;
+        classroomNumber = `Batch 1: ${entry.batch1_classroom || "N/A"}\nBatch 2: ${entry.batch2_classroom || "N/A"}\nBatch 3: ${entry.batch3_classroom || "N/A"}`;
+      }
+  
+      const showDay = entry.day !== lastPrintedDay;
+      const showDivision = entry.division !== lastPrintedDivision;
+  
+      if (showDay) {
+        lastPrintedDay = entry.day;
+      }
+  
+      if (showDivision) {
+        lastPrintedDivision = entry.division;
+      }
+  
+      acc.push([
+        showDay ? entry.day : "",
+        showDivision ? entry.division : "",
+        subjectName, // Batch info in subject cell
+        professorName, // Batch professors in professor cell
+        classroomNumber, // Batch classroom info in classroom cell
+        entry.start_time,
+        entry.end_time,
+      ]);
+  
+      return acc;
+    }, []);
+  
+    // Generate the table in the PDF with merged rows for batches
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 20,
+      theme: "grid",
+      styles: {
+        fontSize: 10,
+        cellPadding: 1,
+        minCellHeight: 10,
+      },
+    });
+  
+    const pdfBlob = doc.output("bloburl");
+    window.open(pdfBlob, "_blank");
+  };
+  
+
+  return (
+    <div className="display">
+      {message && <p>{message}</p>}
+      <h1>Timetable</h1>
+  
+      {timetable.length > 0 ? (
+        <div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Division</th>
+                <th>Subject Name</th>
+                <th>Professor Name</th>
+                <th>Classroom Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {timetable.map((entry, index) => {
+                const showDay = index === 0 || entry.day !== timetable[index - 1].day;
+                const showDivision = index === 0 || entry.division !== timetable[index - 1].division;
+                // console.log(timetable);
+               
+                return (
+                  <tr key={index}>
+                    {editingTimetable && editingTimetable.index === index ? (
+                      <>
+                        <td>{showDay ? <input type="text" name="day" value={editingTimetable.day} onChange={handleChange} className='input' /> : ''}</td>
+                        <td>{showDivision ? <input type="text" name="division" value={editingTimetable.division} onChange={handleChange} className='input' /> : ''}</td>
+                        <td><input type="text" name="subject_name" value={editingTimetable.subject_name} onChange={handleChange} className='input' /></td>
+                        <td><input type="text" name="professor_name" value={editingTimetable.professor_name} onChange={handleChange} className='input' /></td>
+                        <td><input type="text" name="classroom_number" value={editingTimetable.classroom_number} onChange={handleChange} className='input' /></td>
+                        <td><input type="text" name="start_time" value={editingTimetable.start_time} onChange={handleChange} className='input' /></td>
+                        <td><input type="text" name="end_time" value={editingTimetable.end_time} onChange={handleChange} className='input' /></td>
+                        <td><button onClick={handleSave}>Save</button></td>
+                      </>
+                    ) : (
+                      <>
+                      
+                        <td>{showDay ? entry.day : ''}</td>
+                        <td>{showDivision ? entry.division : ''}</td>
+                        <td>{entry.subject_name.includes("practical") ? (
+                          `Batch 1: ${entry.batch1_name || "N/A"}\nBatch 2: ${entry.batch2_name || "N/A"}\nBatch 3: ${entry.batch3_name || "N/A"}`
+                        ) : entry.subject_name}</td>
+                        <td>{entry.professor_name.includes("practical") ? (
+                          `${entry.batch1_professor || "N/A"}\n${entry.batch2_professor || "N/A"}\n${entry.batch3_professor || "N/A"}`
+                        ) : entry.professor_name}</td>
+                        <td>{entry.classroom_number.includes("practical") ? (
+                          `Batch 1: ${entry.batch1_classroom || "N/A"}\nBatch 2: ${entry.batch2_classroom || "N/A"}\nBatch 3: ${entry.batch3_classroom || "N/A"}`
+                        ) : entry.classroom_number}</td>
+                        <td>{entry.start_time}</td>
+                        <td>{entry.end_time}</td>
+                        <td className="td">
+                          <button className="click" onClick={() => handleEdit(index)}>Edit</button>
+                          <button className="click" onClick={() => handleDelete(index, entry.id)}>Delete</button>
+                        </td>
+                      </>
+                    )}
+                   
+
+                        
+
+                   </tr>
+
+     );
+              })}
+            </tbody>
+          </table>
+          <button onClick={handlePreviewPDF} className="d">Preview Timetable as PDF</button>
+        </div>
+      ) : (
+        <p>Loading timetable...</p>
+      )}
+    </div>
+  );
+ }; 
